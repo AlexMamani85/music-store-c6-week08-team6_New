@@ -6,6 +6,8 @@ puts "Destroying all albums"
 Album.destroy_all
 puts "Destroying all artists"
 Artist.destroy_all
+puts "Destroying Customers"
+Customer.destroy_all
 
 10.times do |n|
     artist = Artist.create(
@@ -63,5 +65,20 @@ Song.all.each do |value|
         duration = song.duration + duration
     end
     album_id.update(duration: duration)
-    puts "Album #{album_id} has been updated"
+    puts "Album #{album_id.id} has been updated"
+end
+
+15.times do |n|
+    customer = Customer.new(
+      username: Faker::Internet.username(specifier: 8), 
+      email: Faker::Internet.safe_email, 
+      password: Faker::Internet.password(min_length: 10),
+      name: Faker::Name.first_name
+    )
+  
+    if customer.save
+      puts "Customer created successfully"
+    else
+      puts customer.errors.full_messages.join(", ")
+    end
 end
