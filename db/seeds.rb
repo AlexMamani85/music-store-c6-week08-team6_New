@@ -1,5 +1,7 @@
 require 'faker'
 
+puts "Destroying all songs"
+Song.destroy_all
 puts "Destroying all albums"
 Album.destroy_all
 puts "Destroying all artists"
@@ -34,4 +36,32 @@ Artist.all.each do
             puts album.errors.full_messages.join(", ")
         end
     end
+end
+
+Album.all.each do 
+    rand(4..10).times do
+        song = Song.create(
+                name: Faker::Music::RockBand.song,
+                duration: rand(100..240),
+                album_id: Album.all.sample.id
+            )
+        if song.save
+            puts "Song created successfully!"
+        else
+            puts song.errors.full_messages.join(", ")
+        end
+    end
+end
+
+# Method update 
+
+Song.all.each do |value|
+    album_id = Album.find(value.album_id)
+    songs = Song.where(album_id: album_id)
+    duration = 0
+    songs.each do |song|
+        duration = song.duration + duration
+    end
+    album_id.update(duration: duration)
+    puts "Album #{album_id} has been updated"
 end
