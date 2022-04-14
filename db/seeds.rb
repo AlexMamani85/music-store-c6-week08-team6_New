@@ -2,6 +2,8 @@ require 'faker'
 
 puts "Destroying all songs"
 Song.destroy_all
+puts "Destroying all details"
+Detail.destroy_all
 puts "Destroying all albums"
 Album.destroy_all
 puts "Destroying all artists"
@@ -57,7 +59,7 @@ Album.all.each do
     end
 end
 
-# Method update 
+# Method update duration
 
 Song.all.each do |value|
     album_id = Album.find(value.album_id)
@@ -97,5 +99,18 @@ Customer.all.each do
         else
             puts order.errors.full_messages.join(", ")
         end
+    end
+end
+
+Order.all.each do
+    detail = Detail.create(
+        quantity: rand(1..3),
+        album_id: Album.all.sample.id,
+        order_id: Order.all.sample.id
+    )
+    if detail.save
+        puts "Detail created successfully"
+    else
+        puts detail.errors.full_messages.join(", ")
     end
 end
