@@ -36,7 +36,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_14_051204) do
     t.string "username"
     t.string "email"
     t.string "password"
-    t.boolean "active_flag", default: true
+    t.boolean "active_flag"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_customers_on_email", unique: true
