@@ -1,3 +1,4 @@
+
 require: rubocop-rails
 
 AllCops:
@@ -47,3 +48,4 @@ Metrics/BlockLength:
 Lint/AmbiguousBlockAssociation:
   Exclude:
     - spec/**/*
+    
