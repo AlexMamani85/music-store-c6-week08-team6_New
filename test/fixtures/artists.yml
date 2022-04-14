@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nationality: MyString
+  birth_date: 2022-04-13
+  death_date: 2022-04-13
+
+two:
+  nationality: MyString
+  birth_date: 2022-04-13
+  death_date: 2022-04-13
