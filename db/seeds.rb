@@ -6,6 +6,8 @@ puts "Destroying all albums"
 Album.destroy_all
 puts "Destroying all artists"
 Artist.destroy_all
+puts "Destroying orders"
+Order.destroy_all
 puts "Destroying Customers"
 Customer.destroy_all
 
@@ -14,7 +16,7 @@ Customer.destroy_all
         name: Faker::Music.band,
         nationality: Faker::Nation.nationality,
         birth_date: Faker::Date.between(from: '1980-01-01', to: '2000-12-30'),
-        death_date: Faker::Date.between(from: '2010-01-01', to: '2022-12-30'),
+        death_date: Faker::Date.between(from: '2010-01-01', to: '2022-04-10'),
         biography: Faker::Quote.famous_last_words
     )
     if artist.save
@@ -80,5 +82,20 @@ end
       puts "Customer created successfully"
     else
       puts customer.errors.full_messages.join(", ")
+    end
+end
+
+Customer.all.each do 
+    rand(1..5).times do
+        order = Order.create(
+            date: Faker::Date.between(from: '2010-01-01', to: '2022-04-10'),
+            customer_id: Customer.all.sample.id,
+            total: 1
+        )
+        if order.save
+            puts "Order created successfully"
+        else
+            puts order.errors.full_messages.join(", ")
+        end
     end
 end
