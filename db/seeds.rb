@@ -102,15 +102,31 @@ Customer.all.each do
     end
 end
 
-Order.all.each do
-    detail = Detail.create(
-        quantity: rand(1..3),
-        album_id: Album.all.sample.id,
-        order_id: Order.all.sample.id
-    )
-    if detail.save
-        puts "Detail created successfully"
-    else
-        puts detail.errors.full_messages.join(", ")
+Order.all.each do |value|
+    rand(1..4).times do 
+        detail = Detail.create(
+            quantity: rand(1..3),
+            album_id: Album.all.sample.id,
+            order_id: value.id
+        )
+        if detail.save
+            puts "Detail created successfully"
+        else
+            puts detail.errors.full_messages.join(", ")
+        end
     end
+end
+
+# Method update total
+
+Detail.all.each do |value|
+    order_id = Order.find(value.order_id)
+    details = Detail.where(order_id: order_id)
+    total = 0
+    details.each do |value|
+        album_id = Album.find(value.album_id)
+        total = (album_id.price * value.quantity) + total
+    end
+    order_id.update(total: total)
+    puts "Order #{order_id.id} has been updated"
 end
